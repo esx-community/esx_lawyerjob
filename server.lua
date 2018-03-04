@@ -1,0 +1,1 @@
+TriggerEvent('esx_phone:registerNumber', 'avocat', 'Called a laywer', true, true)
