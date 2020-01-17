@@ -1,8 +1,8 @@
 local takeJob = {x=-406.355,y=1086.247,z=327.705}
 local bossUI = {x=-422.862,y=1073.85,z=327.692}
 
-ESX                             = nil
-local PlayerData 				= nil
+ESX = nil
+local PlayerData = nil
 
 Citizen.CreateThread(function()
   while ESX == nil do
@@ -26,7 +26,6 @@ RegisterNetEvent('esx:playerLoaded')
 AddEventHandler('esx:playerLoaded', function(xPlayer)
   PlayerData = xPlayer
 
-  
   Citizen.CreateThread(function()
   	while true do
   		Citizen.Wait(0)
@@ -54,19 +53,11 @@ AddEventHandler('esx:setJob', function(job)
   PlayerData.job = job
 end)
 
-
-
-
 function Info(text, loop)
 	SetTextComponentFormat("STRING")
 	AddTextComponentString(text)
 	DisplayHelpTextFromStringLabel(0, loop, 1, 0)
 end
-
-
-
-
-
 
 function createSocietyMenu(x,y,z,name, menuName)
 Citizen.CreateThread(function()
@@ -101,11 +92,9 @@ Citizen.CreateThread(function()
 end)
 end
 
-
 function renderMenu(name, menuName)
 	local _name = name
 	local elements = {}
-	
 
   	table.insert(elements, {label = 'withdraw society company', value = 'withdraw_society_money'})
   	table.insert(elements, {label = 'deposit money',        value = 'deposit_money'})
@@ -113,24 +102,18 @@ function renderMenu(name, menuName)
 
 	ESX.UI.Menu.CloseAll()
 
-	ESX.UI.Menu.Open(
-		'default', GetCurrentResourceName(), 'realestateagent',
-		{
+	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'realestateagent', {
 			title    = menuName,
 			align    = 'bottom-right',
 			elements = elements
-		},
-		function(data, menu)
+		}, function(data, menu)
 
 			if data.current.value == 'withdraw_society_money' then
 
-				ESX.UI.Menu.Open(
-					'dialog', GetCurrentResourceName(), 'withdraw_society_money_amount',
-					{
+				ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'withdraw_society_money_amount', {
 						title = 'amount of withdrawal',
 						align = 'bottom-right'
-					},
-					function(data, menu)
+					}, function(data, menu)
 
 						local amount = tonumber(data.value)
 
@@ -141,24 +124,17 @@ function renderMenu(name, menuName)
 							--print(_name)
 							TriggerServerEvent('esx_society:withdrawMoney', _name, amount)
 						end
-
-					end,
-					function(data, menu)
+					end, function(data, menu)
 						menu.close()
-					end
-				)
-
+					end)
 			end
 
 			if data.current.value == 'deposit_money' then
 
-				ESX.UI.Menu.Open(
-					'dialog', GetCurrentResourceName(), 'deposit_money_amount',
-					{
+				ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'deposit_money_amount', {
 						title = 'deposit amount',
 						align = 'bottom-right'
-					},
-					function(data, menu)
+					}, function(data, menu)
 
 						local amount = tonumber(data.value)
 
@@ -168,24 +144,17 @@ function renderMenu(name, menuName)
 							menu.close()
 							TriggerServerEvent('esx_society:depositMoney', _name, amount)
 						end
-
-					end,
-					function(data, menu)
+					end, function(data, menu)
 						menu.close()
-					end
-				)
-
+					end)
 			end
 
 			if data.current.value == 'wash_money' then
 
-				ESX.UI.Menu.Open(
-					'dialog', GetCurrentResourceName(), 'wash_money_amount',
-					{
+				ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'wash_money_amount', {
 						title = 'Wash money',
 						align = 'bottom-right'
-					},
-					function(data, menu)
+					}, function(data, menu)
 
 						local amount = tonumber(data.value)
 
@@ -195,29 +164,17 @@ function renderMenu(name, menuName)
 							menu.close()
 							TriggerServerEvent('esx_society:washMoney', _name, amount)
 						end
-
-					end,
-					function(data, menu)
+					end, function(data, menu)
 						menu.close()
-					end
-				)
-
+					end)
 			end
-
-		end,
-		function(data, menu)
+		end, function(data, menu)
 
 			menu.close()
-		end
-	)
+		end)
 end
 
-
-
-
-
 function openTakeService()
-
   local elements = {
     {label = "citizen wear", value = 'citizen_wear'},
     {label = "lawyer wear", value = 'avocat_wear'}
@@ -225,15 +182,11 @@ function openTakeService()
 
   ESX.UI.Menu.CloseAll()
 
-    ESX.UI.Menu.Open(
-      'default', GetCurrentResourceName(), 'cloakroom',
-      {
+    ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'cloakroom', {
         title    = 'Service plug',
         align    = 'bottom-right',
         elements = elements,
-        },
-
-        function(data, menu)
+        }, function(data, menu)
 
       menu.close()
 
@@ -266,7 +219,6 @@ function openTakeService()
 
         ESX.TriggerServerCallback('esx_skin:getPlayerSkin', function(skin, jobSkin)
 
-          
           if skin.sex == 0 then
             TriggerEvent('skinchanger:loadClothes', skin, jobSkin.skin_male)
           else
@@ -274,16 +226,9 @@ function openTakeService()
           end
            setComponentByGrade(skin.sex)
         end)
-
       end
-
-
-    end,
-    function(data, menu)
+    end, function(data, menu)
 
       menu.close()
-
-    end
-  )
-
+    end)
 end
